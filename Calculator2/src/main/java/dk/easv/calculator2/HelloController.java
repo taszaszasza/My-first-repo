@@ -38,13 +38,25 @@ public class HelloController {
     }
 
     public void onBtnProcentClick(ActionEvent actionEvent) {
-        savedValue1 = value1;
-        operator = "%";
-        value1 = "";
+        if (savedValue1 == "") {
+
+            savedValue2 = 0;
+            savedValue1 = value1;
+            value1 = value1 + "%";
+            savedValue3 = Double.parseDouble(savedValue1);
+            operator = "%";
+            lblResult.setText(value1);
+        }
+        else {
+            savedValue2 = Double.parseDouble(value1)/100;
+            lblResult.setText(value1 + "%");
+        }
+
     }
 
     public void onBtnDivideClick(ActionEvent actionEvent) {
         savedValue1 = value1;
+        savedValue3 = Double.parseDouble(savedValue1);
         operator = "/";
         value1 = "";
 
@@ -68,6 +80,7 @@ public class HelloController {
 
     public void onBtnMultiplyClick(ActionEvent actionEvent) {
         savedValue1 = value1;
+        savedValue3 = Double.parseDouble(savedValue1);
         operator = "*";
         value1 = "";
 
@@ -91,6 +104,7 @@ public class HelloController {
 
     public void onBtnMinusClick(ActionEvent actionEvent) {
         savedValue1 = value1;
+        savedValue3 = Double.parseDouble(savedValue1);
         operator = "-";
         value1 = "";
 
@@ -114,6 +128,7 @@ public class HelloController {
 
     public void onBtnPlusClick(ActionEvent actionEvent) {
         savedValue1 = value1;
+        savedValue3 = Double.parseDouble(savedValue1);
         operator = "+";
         value1 = "";
 
@@ -130,11 +145,13 @@ public class HelloController {
     }
 
     public void onBtnEqualsClick(ActionEvent actionEvent) {
-        savedValue2 = Double.parseDouble(value1);
-        savedValue3 = Double.parseDouble(savedValue1);
-
-        lblResult.setText(String.valueOf(calculatorLogic.calculate(operator, savedValue2, savedValue3)));
-
+        if (value1.charAt(value1.length() - 1) != '%') {
+            savedValue2 = Double.parseDouble(value1);
+            lblResult.setText(String.valueOf(calculatorLogic.calculate(operator, savedValue2, savedValue3)));
+        }
+        else {
+            lblResult.setText(String.valueOf(calculatorLogic.procentInEnd(operator, savedValue2, savedValue3)));
+        }
     }
 }
 
